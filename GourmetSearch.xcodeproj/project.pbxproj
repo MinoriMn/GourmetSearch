@@ -10,7 +10,7 @@
 		C95BA9052801B46D007A9BDC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95BA9042801B46D007A9BDC /* AppDelegate.swift */; };
 		C95BA9072801B46D007A9BDC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95BA9062801B46D007A9BDC /* SceneDelegate.swift */; };
 		C95BA9092801B46D007A9BDC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95BA9082801B46D007A9BDC /* ViewController.swift */; };
-		C95BA90C2801B46D007A9BDC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C95BA90A2801B46D007A9BDC /* Main.storyboard */; };
+		C95BA90C2801B46D007A9BDC /* ViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C95BA90A2801B46D007A9BDC /* ViewController.storyboard */; };
 		C95BA90E2801B46F007A9BDC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C95BA90D2801B46F007A9BDC /* Assets.xcassets */; };
 		C95BA9112801B46F007A9BDC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C95BA90F2801B46F007A9BDC /* LaunchScreen.storyboard */; };
 		C95BA91C2801B46F007A9BDC /* GourmetSearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95BA91B2801B46F007A9BDC /* GourmetSearchTests.swift */; };
@@ -40,7 +40,7 @@
 		C95BA9042801B46D007A9BDC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C95BA9062801B46D007A9BDC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		C95BA9082801B46D007A9BDC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		C95BA90B2801B46D007A9BDC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		C95BA90B2801B46D007A9BDC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ViewController.storyboard; sourceTree = "<group>"; };
 		C95BA90D2801B46F007A9BDC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C95BA9102801B46F007A9BDC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C95BA9122801B46F007A9BDC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -99,12 +99,12 @@
 		C95BA9032801B46D007A9BDC /* GourmetSearch */ = {
 			isa = PBXGroup;
 			children = (
-				C95BA9042801B46D007A9BDC /* AppDelegate.swift */,
-				C95BA9062801B46D007A9BDC /* SceneDelegate.swift */,
-				C95BA9082801B46D007A9BDC /* ViewController.swift */,
-				C95BA90A2801B46D007A9BDC /* Main.storyboard */,
-				C95BA90D2801B46F007A9BDC /* Assets.xcassets */,
-				C95BA90F2801B46F007A9BDC /* LaunchScreen.storyboard */,
+				C95BA9392801B731007A9BDC /* GourmetSearchResource */,
+				C95BA9382801B704007A9BDC /* GourmetSearchUseCase */,
+				C95BA9372801B6E6007A9BDC /* GourmetSearchExtension */,
+				C95BA9362801B6CA007A9BDC /* GourmetSearchEntity */,
+				C95BA9352801B6C3007A9BDC /* GourmetSearchInfra */,
+				C95BA9342801B6AD007A9BDC /* GourmetSearch */,
 				C95BA9122801B46F007A9BDC /* Info.plist */,
 			);
 			path = GourmetSearch;
@@ -125,6 +125,86 @@
 				C95BA9272801B46F007A9BDC /* GourmetSearchUITestsLaunchTests.swift */,
 			);
 			path = GourmetSearchUITests;
+			sourceTree = "<group>";
+		};
+		C95BA9342801B6AD007A9BDC /* GourmetSearch */ = {
+			isa = PBXGroup;
+			children = (
+				C95BA93B2801B98B007A9BDC /* View */,
+				C95BA93A2801B978007A9BDC /* Application */,
+			);
+			path = GourmetSearch;
+			sourceTree = "<group>";
+		};
+		C95BA9352801B6C3007A9BDC /* GourmetSearchInfra */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = GourmetSearchInfra;
+			sourceTree = "<group>";
+		};
+		C95BA9362801B6CA007A9BDC /* GourmetSearchEntity */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = GourmetSearchEntity;
+			sourceTree = "<group>";
+		};
+		C95BA9372801B6E6007A9BDC /* GourmetSearchExtension */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = GourmetSearchExtension;
+			sourceTree = "<group>";
+		};
+		C95BA9382801B704007A9BDC /* GourmetSearchUseCase */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = GourmetSearchUseCase;
+			sourceTree = "<group>";
+		};
+		C95BA9392801B731007A9BDC /* GourmetSearchResource */ = {
+			isa = PBXGroup;
+			children = (
+				C95BA90D2801B46F007A9BDC /* Assets.xcassets */,
+			);
+			path = GourmetSearchResource;
+			sourceTree = "<group>";
+		};
+		C95BA93A2801B978007A9BDC /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				C95BA9042801B46D007A9BDC /* AppDelegate.swift */,
+				C95BA9062801B46D007A9BDC /* SceneDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		C95BA93B2801B98B007A9BDC /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C95BA93D2801BA43007A9BDC /* LaunchScreen */,
+				C95BA93C2801B9F3007A9BDC /* ViewController */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C95BA93C2801B9F3007A9BDC /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C95BA9082801B46D007A9BDC /* ViewController.swift */,
+				C95BA90A2801B46D007A9BDC /* ViewController.storyboard */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		C95BA93D2801BA43007A9BDC /* LaunchScreen */ = {
+			isa = PBXGroup;
+			children = (
+				C95BA90F2801B46F007A9BDC /* LaunchScreen.storyboard */,
+			);
+			path = LaunchScreen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -233,7 +313,7 @@
 			files = (
 				C95BA9112801B46F007A9BDC /* LaunchScreen.storyboard in Resources */,
 				C95BA90E2801B46F007A9BDC /* Assets.xcassets in Resources */,
-				C95BA90C2801B46D007A9BDC /* Main.storyboard in Resources */,
+				C95BA90C2801B46D007A9BDC /* ViewController.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,12 +377,12 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		C95BA90A2801B46D007A9BDC /* Main.storyboard */ = {
+		C95BA90A2801B46D007A9BDC /* ViewController.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				C95BA90B2801B46D007A9BDC /* Base */,
 			);
-			name = Main.storyboard;
+			name = ViewController.storyboard;
 			sourceTree = "<group>";
 		};
 		C95BA90F2801B46F007A9BDC /* LaunchScreen.storyboard */ = {
