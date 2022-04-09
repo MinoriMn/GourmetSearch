@@ -6,6 +6,7 @@ target 'GourmetSearch' do
   use_frameworks!
 
   # Pods for GourmetSearch
+  pod 'R.swift'
 
   target 'GourmetSearchTests' do
     inherit! :search_paths
