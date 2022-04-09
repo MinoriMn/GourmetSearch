@@ -1,20 +1,24 @@
 PODS:
+  - APIKit (5.3.0)
   - R.swift (6.1.0):
     - R.swift.Library (~> 5.3.0)
   - R.swift.Library (5.3.0)
 
 DEPENDENCIES:
+  - APIKit (~> 5.0)
   - R.swift
 
 SPEC REPOS:
   trunk:
+    - APIKit
     - R.swift
     - R.swift.Library
 
 SPEC CHECKSUMS:
+  APIKit: f9b21088bf1575a226e815a62bb6e5ed36fb7fe3
   R.swift: ec98ff71c4ab2f6fd01dd077e5afd15e63a4834c
   R.swift.Library: 0fc583cb55a99e28901299cc451614cad1161962
 
-PODFILE CHECKSUM: b7bb6e934440858010b83fde29441f7633295f3f
+PODFILE CHECKSUM: 515d54a31c513705a58406b546116c09bd6503c3
 
 COCOAPODS: 1.11.3
