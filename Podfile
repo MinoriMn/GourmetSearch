@@ -8,6 +8,7 @@ target 'GourmetSearch' do
   # Pods for GourmetSearch
   pod 'R.swift'
   pod 'APIKit', '~> 5.0'
+  pod 'CombineCocoa'
 
   target 'GourmetSearchTests' do
     inherit! :search_paths
