@@ -12,13 +12,21 @@
 		C914F3232801CA3300AC1E5E /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C914F3222801CA3300AC1E5E /* R.generated.swift */; };
 		C95BA9052801B46D007A9BDC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95BA9042801B46D007A9BDC /* AppDelegate.swift */; };
 		C95BA9072801B46D007A9BDC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95BA9062801B46D007A9BDC /* SceneDelegate.swift */; };
-		C95BA9092801B46D007A9BDC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95BA9082801B46D007A9BDC /* ViewController.swift */; };
-		C95BA90C2801B46D007A9BDC /* ViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C95BA90A2801B46D007A9BDC /* ViewController.storyboard */; };
+		C95BA9092801B46D007A9BDC /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95BA9082801B46D007A9BDC /* SearchViewController.swift */; };
+		C95BA90C2801B46D007A9BDC /* SearchViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C95BA90A2801B46D007A9BDC /* SearchViewController.storyboard */; };
 		C95BA90E2801B46F007A9BDC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C95BA90D2801B46F007A9BDC /* Assets.xcassets */; };
 		C95BA9112801B46F007A9BDC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C95BA90F2801B46F007A9BDC /* LaunchScreen.storyboard */; };
 		C95BA91C2801B46F007A9BDC /* GourmetSearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95BA91B2801B46F007A9BDC /* GourmetSearchTests.swift */; };
 		C95BA9262801B46F007A9BDC /* GourmetSearchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95BA9252801B46F007A9BDC /* GourmetSearchUITests.swift */; };
 		C95BA9282801B46F007A9BDC /* GourmetSearchUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95BA9272801B46F007A9BDC /* GourmetSearchUITestsLaunchTests.swift */; };
+		C9C960BC280B97420002630B /* GourmetSearchAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C960BB280B97420002630B /* GourmetSearchAPI.swift */; };
+		C9C960BF280B9A330002630B /* Shop.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C960BE280B9A330002630B /* Shop.swift */; };
+		C9C960C3280BC7810002630B /* apikey.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9C960C2280BC7810002630B /* apikey.plist */; };
+		C9C960C5280BC9010002630B /* PlistReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C960C4280BC9010002630B /* PlistReader.swift */; };
+		C9C960C8280BCAEC0002630B /* ShopsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C960C7280BCAEC0002630B /* ShopsRepository.swift */; };
+		C9C960CA280BCF440002630B /* CommonError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C960C9280BCF440002630B /* CommonError.swift */; };
+		C9C960CC280BDC6B0002630B /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C960CB280BDC6B0002630B /* SearchViewModel.swift */; };
+		C9C960CE280BDEB40002630B /* SearchUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C960CD280BDEB40002630B /* SearchUseCase.swift */; };
 		CF546922E654CB5646433FD2 /* Pods_GourmetSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61DF26A141AE89140D9A017D /* Pods_GourmetSearch.framework */; };
 /* End PBXBuildFile section */
 
@@ -51,8 +59,8 @@
 		C95BA9012801B46D007A9BDC /* GourmetSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GourmetSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C95BA9042801B46D007A9BDC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C95BA9062801B46D007A9BDC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		C95BA9082801B46D007A9BDC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		C95BA90B2801B46D007A9BDC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ViewController.storyboard; sourceTree = "<group>"; };
+		C95BA9082801B46D007A9BDC /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		C95BA90B2801B46D007A9BDC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/SearchViewController.storyboard; sourceTree = "<group>"; };
 		C95BA90D2801B46F007A9BDC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C95BA9102801B46F007A9BDC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C95BA9122801B46F007A9BDC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -61,6 +69,14 @@
 		C95BA9212801B46F007A9BDC /* GourmetSearchUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GourmetSearchUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C95BA9252801B46F007A9BDC /* GourmetSearchUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GourmetSearchUITests.swift; sourceTree = "<group>"; };
 		C95BA9272801B46F007A9BDC /* GourmetSearchUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GourmetSearchUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		C9C960BB280B97420002630B /* GourmetSearchAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GourmetSearchAPI.swift; sourceTree = "<group>"; };
+		C9C960BE280B9A330002630B /* Shop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shop.swift; sourceTree = "<group>"; };
+		C9C960C2280BC7810002630B /* apikey.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = apikey.plist; sourceTree = "<group>"; };
+		C9C960C4280BC9010002630B /* PlistReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlistReader.swift; sourceTree = "<group>"; };
+		C9C960C7280BCAEC0002630B /* ShopsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopsRepository.swift; sourceTree = "<group>"; };
+		C9C960C9280BCF440002630B /* CommonError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonError.swift; sourceTree = "<group>"; };
+		C9C960CB280BDC6B0002630B /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		C9C960CD280BDEB40002630B /* SearchUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUseCase.swift; sourceTree = "<group>"; };
 		CEADE73CA19C928D63ACF2D9 /* Pods-GourmetSearchTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GourmetSearchTests.debug.xcconfig"; path = "Target Support Files/Pods-GourmetSearchTests/Pods-GourmetSearchTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E893A7DA9DD015C8948DFA80 /* Pods_GourmetSearchTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GourmetSearchTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -131,6 +147,7 @@
 		C95BA9032801B46D007A9BDC /* GourmetSearch */ = {
 			isa = PBXGroup;
 			children = (
+				C9C960C6280BCA730002630B /* GourmetSearchDomain */,
 				C95BA9392801B731007A9BDC /* GourmetSearchResource */,
 				C95BA9382801B704007A9BDC /* GourmetSearchUseCase */,
 				C95BA9372801B6E6007A9BDC /* GourmetSearchExtension */,
@@ -171,6 +188,8 @@
 		C95BA9352801B6C3007A9BDC /* GourmetSearchInfra */ = {
 			isa = PBXGroup;
 			children = (
+				C9C960C1280BC7660002630B /* Sources */,
+				C9C960C0280BC75E0002630B /* Resources */,
 			);
 			path = GourmetSearchInfra;
 			sourceTree = "<group>";
@@ -178,6 +197,8 @@
 		C95BA9362801B6CA007A9BDC /* GourmetSearchEntity */ = {
 			isa = PBXGroup;
 			children = (
+				C9C960BE280B9A330002630B /* Shop.swift */,
+				C9C960C9280BCF440002630B /* CommonError.swift */,
 			);
 			path = GourmetSearchEntity;
 			sourceTree = "<group>";
@@ -185,6 +206,7 @@
 		C95BA9372801B6E6007A9BDC /* GourmetSearchExtension */ = {
 			isa = PBXGroup;
 			children = (
+				C9C960C4280BC9010002630B /* PlistReader.swift */,
 			);
 			path = GourmetSearchExtension;
 			sourceTree = "<group>";
@@ -192,6 +214,7 @@
 		C95BA9382801B704007A9BDC /* GourmetSearchUseCase */ = {
 			isa = PBXGroup;
 			children = (
+				C9C960CD280BDEB40002630B /* SearchUseCase.swift */,
 			);
 			path = GourmetSearchUseCase;
 			sourceTree = "<group>";
@@ -218,18 +241,19 @@
 			isa = PBXGroup;
 			children = (
 				C95BA93D2801BA43007A9BDC /* LaunchScreen */,
-				C95BA93C2801B9F3007A9BDC /* ViewController */,
+				C95BA93C2801B9F3007A9BDC /* SearchViewController */,
 			);
 			path = View;
 			sourceTree = "<group>";
 		};
-		C95BA93C2801B9F3007A9BDC /* ViewController */ = {
+		C95BA93C2801B9F3007A9BDC /* SearchViewController */ = {
 			isa = PBXGroup;
 			children = (
-				C95BA9082801B46D007A9BDC /* ViewController.swift */,
-				C95BA90A2801B46D007A9BDC /* ViewController.storyboard */,
+				C95BA9082801B46D007A9BDC /* SearchViewController.swift */,
+				C95BA90A2801B46D007A9BDC /* SearchViewController.storyboard */,
+				C9C960CB280BDC6B0002630B /* SearchViewModel.swift */,
 			);
-			path = ViewController;
+			path = SearchViewController;
 			sourceTree = "<group>";
 		};
 		C95BA93D2801BA43007A9BDC /* LaunchScreen */ = {
@@ -238,6 +262,30 @@
 				C95BA90F2801B46F007A9BDC /* LaunchScreen.storyboard */,
 			);
 			path = LaunchScreen;
+			sourceTree = "<group>";
+		};
+		C9C960C0280BC75E0002630B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				C9C960C2280BC7810002630B /* apikey.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		C9C960C1280BC7660002630B /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				C9C960BB280B97420002630B /* GourmetSearchAPI.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		C9C960C6280BCA730002630B /* GourmetSearchDomain */ = {
+			isa = PBXGroup;
+			children = (
+				C9C960C7280BCAEC0002630B /* ShopsRepository.swift */,
+			);
+			path = GourmetSearchDomain;
 			sourceTree = "<group>";
 		};
 		EB8E2FBC2A6CBA7E90DED9B0 /* Frameworks */ = {
@@ -361,8 +409,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				C95BA9112801B46F007A9BDC /* LaunchScreen.storyboard in Resources */,
+				C9C960C3280BC7810002630B /* apikey.plist in Resources */,
 				C95BA90E2801B46F007A9BDC /* Assets.xcassets in Resources */,
-				C95BA90C2801B46D007A9BDC /* ViewController.storyboard in Resources */,
+				C95BA90C2801B46D007A9BDC /* SearchViewController.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -509,8 +558,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C95BA9092801B46D007A9BDC /* ViewController.swift in Sources */,
+				C9C960BC280B97420002630B /* GourmetSearchAPI.swift in Sources */,
+				C9C960CA280BCF440002630B /* CommonError.swift in Sources */,
+				C95BA9092801B46D007A9BDC /* SearchViewController.swift in Sources */,
 				C95BA9052801B46D007A9BDC /* AppDelegate.swift in Sources */,
+				C9C960BF280B9A330002630B /* Shop.swift in Sources */,
+				C9C960C5280BC9010002630B /* PlistReader.swift in Sources */,
+				C9C960CC280BDC6B0002630B /* SearchViewModel.swift in Sources */,
+				C9C960C8280BCAEC0002630B /* ShopsRepository.swift in Sources */,
+				C9C960CE280BDEB40002630B /* SearchUseCase.swift in Sources */,
 				C95BA9072801B46D007A9BDC /* SceneDelegate.swift in Sources */,
 				C914F3232801CA3300AC1E5E /* R.generated.swift in Sources */,
 			);
@@ -549,12 +605,12 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		C95BA90A2801B46D007A9BDC /* ViewController.storyboard */ = {
+		C95BA90A2801B46D007A9BDC /* SearchViewController.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				C95BA90B2801B46D007A9BDC /* Base */,
 			);
-			name = ViewController.storyboard;
+			name = SearchViewController.storyboard;
 			sourceTree = "<group>";
 		};
 		C95BA90F2801B46F007A9BDC /* LaunchScreen.storyboard */ = {
