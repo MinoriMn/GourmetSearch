@@ -5,7 +5,14 @@ typealias Range = GourmetSearchRequest.Parameter.Range
 typealias Order = GourmetSearchRequest.Parameter.Order
 
 class ShopsRepository {
-    private let gourmetSearchAPI = GourmetSearchAPI(apiKey: PlistReader(forResource: "apikey").getValue(key: "recruitApiKey") as! String)
+    private let gourmetSearchAPI: GourmetSearchAPI
+
+    init() {
+        let plistPath: URL = R.file.apikeyPlist()!
+        let keys: NSDictionary = NSDictionary(contentsOf: plistPath)!
+
+        gourmetSearchAPI = GourmetSearchAPI(apiKey: keys["recruitApiKey"]! as! String)
+    }
 
     public func searchShops(
         keyword: String? = nil,

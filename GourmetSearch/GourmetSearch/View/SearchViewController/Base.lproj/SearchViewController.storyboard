@@ -16,20 +16,52 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wfk-ln-Jhx">
-                                <rect key="frame" x="186" y="438" width="33" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" showsScale="YES" showsTraffic="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IPK-jG-5YE">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                            </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QYf-Nw-1sh" userLabel="LocationButton">
+                                <rect key="frame" x="307" y="755" width="75" height="75"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="QYf-Nw-1sh" secondAttribute="height" multiplier="1:1" id="u4Y-kU-RCn"/>
+                                    <constraint firstAttribute="width" constant="75" id="xNd-Qh-KUn"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" image="location.fill" catalog="system" cornerStyle="capsule">
+                                    <color key="baseForegroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="baseBackgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </buttonConfiguration>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YIB-ID-4IS" userLabel="SearchButton">
+                                <rect key="frame" x="32" y="755" width="150" height="75"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="YIB-ID-4IS" secondAttribute="height" multiplier="2:1" id="8Au-JM-mvL"/>
+                                    <constraint firstAttribute="width" constant="150" id="hXV-we-AGJ"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" image="list.dash" catalog="system" title="90件" cornerStyle="capsule">
+                                    <color key="baseForegroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="baseBackgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </buttonConfiguration>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="Wfk-ln-Jhx" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="394" id="57p-fK-Ijb"/>
-                            <constraint firstItem="Wfk-ln-Jhx" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="186" id="ax5-Ni-taf"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="YIB-ID-4IS" secondAttribute="bottom" constant="32" id="29s-qp-Lfa"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="QYf-Nw-1sh" secondAttribute="bottom" constant="32" id="BAY-yP-Qig"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="IPK-jG-5YE" secondAttribute="trailing" id="Dla-DW-HqR"/>
+                            <constraint firstItem="YIB-ID-4IS" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="JUx-Qk-HEP"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="IPK-jG-5YE" secondAttribute="bottom" id="JjE-GA-65I"/>
+                            <constraint firstItem="QYf-Nw-1sh" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" symbolic="YES" id="MeJ-dX-2NW"/>
+                            <constraint firstItem="IPK-jG-5YE" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="QWg-gi-x82"/>
+                            <constraint firstItem="IPK-jG-5YE" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="lqR-yI-O6s"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="QYf-Nw-1sh" secondAttribute="trailing" constant="32" id="nNH-ku-ry9"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="locationButton" destination="QYf-Nw-1sh" id="kx7-LO-Mjy"/>
+                        <outlet property="mapView" destination="IPK-jG-5YE" id="pWw-mR-ZIt"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -37,6 +69,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="list.dash" catalog="system" width="128" height="85"/>
+        <image name="location.fill" catalog="system" width="128" height="121"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

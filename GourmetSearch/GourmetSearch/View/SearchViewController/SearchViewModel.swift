@@ -16,16 +16,24 @@ class SearchViewModel {
         }
             .eraseToAnyPublisher()
 
-        return .init(shops: shops)
+        let closeToCurrentLocation = input.locationButtonTapped
+            .setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
+
+        return .init(
+            shops: shops,
+            closeToCurrentLocation: closeToCurrentLocation
+        )
     }
 }
 
 extension SearchViewModel {
     struct Input {
-
+        let locationButtonTapped: AnyPublisher<Void, Never>
     }
 
     struct Output {
         let shops: AnyPublisher<[Shop], Error>
+        let closeToCurrentLocation: AnyPublisher<Void, Error>
     }
 }
