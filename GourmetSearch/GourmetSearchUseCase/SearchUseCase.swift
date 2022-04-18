@@ -9,8 +9,8 @@ class SearchUseCase {
 
     public func shopsSearchByGPS(
         keyword: String? = nil,
-        lat: Float? = nil,
-        lng: Float? = nil,
+        lat: Double? = nil,
+        lng: Double? = nil,
         range: Range? = nil,
         genre: String? = nil,
         order: Order? = nil

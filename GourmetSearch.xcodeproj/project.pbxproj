@@ -30,6 +30,7 @@
 		C9C960F1280C51D30002630B /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C960F0280C51D30002630B /* SearchBar.swift */; };
 		C9C960F4280C5E420002630B /* ConditionViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C9C960F3280C5E420002630B /* ConditionViewController.storyboard */; };
 		C9C960F6280C5E570002630B /* ConditionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C960F5280C5E570002630B /* ConditionViewController.swift */; };
+		C9E83BEF280D43B800D83759 /* ShopAnnotaion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E83BEE280D43B800D83759 /* ShopAnnotaion.swift */; };
 		CF546922E654CB5646433FD2 /* Pods_GourmetSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61DF26A141AE89140D9A017D /* Pods_GourmetSearch.framework */; };
 /* End PBXBuildFile section */
 
@@ -83,6 +84,7 @@
 		C9C960F0280C51D30002630B /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		C9C960F3280C5E420002630B /* ConditionViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ConditionViewController.storyboard; sourceTree = "<group>"; };
 		C9C960F5280C5E570002630B /* ConditionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionViewController.swift; sourceTree = "<group>"; };
+		C9E83BEE280D43B800D83759 /* ShopAnnotaion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopAnnotaion.swift; sourceTree = "<group>"; };
 		CEADE73CA19C928D63ACF2D9 /* Pods-GourmetSearchTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GourmetSearchTests.debug.xcconfig"; path = "Target Support Files/Pods-GourmetSearchTests/Pods-GourmetSearchTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E893A7DA9DD015C8948DFA80 /* Pods_GourmetSearchTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GourmetSearchTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -255,6 +257,7 @@
 		C95BA93C2801B9F3007A9BDC /* SearchViewController */ = {
 			isa = PBXGroup;
 			children = (
+				C9E83BED280D439900D83759 /* Annotaion */,
 				C9C960EB280C4E330002630B /* SearchBar */,
 				C95BA9082801B46D007A9BDC /* SearchViewController.swift */,
 				C95BA90A2801B46D007A9BDC /* SearchViewController.storyboard */,
@@ -311,6 +314,14 @@
 				C9C960F5280C5E570002630B /* ConditionViewController.swift */,
 			);
 			path = ConditionViewController;
+			sourceTree = "<group>";
+		};
+		C9E83BED280D439900D83759 /* Annotaion */ = {
+			isa = PBXGroup;
+			children = (
+				C9E83BEE280D43B800D83759 /* ShopAnnotaion.swift */,
+			);
+			path = Annotaion;
 			sourceTree = "<group>";
 		};
 		EB8E2FBC2A6CBA7E90DED9B0 /* Frameworks */ = {
@@ -592,6 +603,7 @@
 				C9C960BF280B9A330002630B /* Shop.swift in Sources */,
 				C9C960CC280BDC6B0002630B /* SearchViewModel.swift in Sources */,
 				C9C960F6280C5E570002630B /* ConditionViewController.swift in Sources */,
+				C9E83BEF280D43B800D83759 /* ShopAnnotaion.swift in Sources */,
 				C9C960C8280BCAEC0002630B /* ShopsRepository.swift in Sources */,
 				C9C960CE280BDEB40002630B /* SearchUseCase.swift in Sources */,
 				C95BA9072801B46D007A9BDC /* SceneDelegate.swift in Sources */,

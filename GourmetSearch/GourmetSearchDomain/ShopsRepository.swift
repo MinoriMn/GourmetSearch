@@ -16,8 +16,8 @@ class ShopsRepository {
 
     public func searchShops(
         keyword: String? = nil,
-        lat: Float? = nil,
-        lng: Float? = nil,
+        lat: Double? = nil,
+        lng: Double? = nil,
         range: Range? = nil,
         genre: String? = nil,
         order: Order? = nil
@@ -30,7 +30,7 @@ class ShopsRepository {
             genre: genre,
             order: order,
             start: 1,
-            count: 50
+            count: 30
         )
     }
 }

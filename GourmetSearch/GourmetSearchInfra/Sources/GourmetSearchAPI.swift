@@ -11,8 +11,8 @@ class GourmetSearchAPI {
     public func searchShops(
         id: [String]? = nil,
         keyword: String? = nil,
-        lat: Float? = nil,
-        lng: Float? = nil,
+        lat: Double? = nil,
+        lng: Double? = nil,
         range: GourmetSearchRequest.Parameter.Range? = nil,
         genre: String? = nil,
         order: GourmetSearchRequest.Parameter.Order? = nil,
@@ -135,8 +135,8 @@ extension GourmetSearchRequest {
         let key: String
         let id: [String]?
         let keyword: String?
-        let lat: Float?
-        let lng: Float?
+        let lat: Double?
+        let lng: Double?
         let range: Range?
         let genre: String?
         let lunch: Bool = false
@@ -205,8 +205,8 @@ extension GourmetSearchRequest {
                 let name: String
                 let logoImage: String?
                 let address: String?
-                let lat: Float?
-                let lng: Float?
+                let lat: Double?
+                let lng: Double?
                 let genre: Genre?
                 let budget: Budget?
                 let urls: ShopURL?

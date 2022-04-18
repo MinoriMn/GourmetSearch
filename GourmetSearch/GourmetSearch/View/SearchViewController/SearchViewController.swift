@@ -5,7 +5,7 @@ import MapKit
 import CoreLocation
 import FloatingPanel
 
-class SearchViewController: UIViewController, CLLocationManagerDelegate, FloatingPanelControllerDelegate {
+class SearchViewController: UIViewController, CLLocationManagerDelegate, FloatingPanelControllerDelegate, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var locationButton: UIButton!
     @IBOutlet weak var searchButton: UIButton!
@@ -17,8 +17,16 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate, Floatin
     private let viewModel: SearchViewModel = .init()
     private var cancellables: [AnyCancellable] = []
 
+    private var pins: [ShopAnnotation] = []
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        mapView.delegate = self
+        mapView.showsBuildings = true
+        let category: [MKPointOfInterestCategory] = [.bakery, .brewery, .cafe, .foodMarket, .restaurant, .store, .winery]
+        let filter = MKPointOfInterestFilter(excluding: category)
+        mapView.pointOfInterestFilter = filter
 
         floatingPanelController = FloatingPanelController()
         floatingPanelController.delegate = self
@@ -92,7 +100,28 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate, Floatin
                     print(error)
                 }
             }, receiveValue: { [weak self] shops in
-                self?.searchButton.titleLabel?.text = "\(shops.count)件"
+                guard let self = self else { return }
+                // 件数表示
+                self.searchButton.titleLabel?.text = "\(shops.count)件"
+
+                // ピン情報
+                for pin in self.pins {
+                    self.mapView.removeAnnotation(pin)
+                }
+                self.pins.removeAll()
+
+                guard let foodImage = UIImage(systemName: "fork.knife") else { return }
+
+                var newPins: [ShopAnnotation] = []
+                for shop in shops {
+                    guard let lat = shop.lat, let lng = shop.lng else { continue }
+                    let coord = CLLocationCoordinate2D(latitude: lat, longitude: lng)
+                    let pin = ShopAnnotation(coord, glyphImage: foodImage, glyphTintColor: .white, markerTintColor: .orange)
+                    pin.title = shop.name
+                    newPins.append(pin)
+                }
+                self.pins = newPins
+                self.mapView.showAnnotations(newPins, animated: true)
             })
             .store(in: &cancellables)
 
@@ -117,4 +146,23 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate, Floatin
             mapView.setRegion(region, animated: true)
         }
     }
+
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        // 現在位置なら何もしない
+        if annotation is MKUserLocation {
+            return nil
+        }
+
+        let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier, for: annotation)
+
+        guard let markerAnnotationView = annotationView as? MKMarkerAnnotationView,
+              let shopAnnotation = annotation as? ShopAnnotation else { return annotationView }
+
+        markerAnnotationView.clusteringIdentifier = ShopAnnotation.clusteringIdentifier
+        markerAnnotationView.glyphImage = shopAnnotation.glyphImage
+        markerAnnotationView.glyphTintColor = shopAnnotation.glyphTintColor
+        markerAnnotationView.markerTintColor = shopAnnotation.markerTintColor
+
+        return markerAnnotationView
+   }
 }

@@ -11,7 +11,7 @@ class SearchViewModel {
     private var searchCondition: SearchCondition = .init(
         keyword: nil,
         coord: .init(latitude: 35.688904, longitude: 139.696422),
-        range: .u300m,
+        range: .u1000m,
         genre: nil,
         order: .recommendation
     )
@@ -28,8 +28,8 @@ class SearchViewModel {
 
             return self.usecase.shopsSearchByGPS(
                 keyword: self.searchCondition.keyword,
-                lat: Float(self.searchCondition.coord.latitude),
-                lng: Float(self.searchCondition.coord.longitude),
+                lat: self.searchCondition.coord.latitude,
+                lng: self.searchCondition.coord.longitude,
                 range: self.searchCondition.range,
                 genre: self.searchCondition.genre,
                 order: self.searchCondition.order
