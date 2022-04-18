@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina3_5" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="pxf-5u-l4z" customClass="SearchBar" customModule="GourmetSearch" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Obt-R8-yKN" userLabel="BackgrounfView">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="今の検索条件" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rFO-Kd-801" userLabel="TitleLabel">
+                            <rect key="frame" x="16" y="8" width="92" height="18"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yrE-Nw-cY6" userLabel="ConditionButton">
+                            <rect key="frame" x="16" y="34" width="288" height="430"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="filled" image="magnifyingglass" catalog="system" cornerStyle="small">
+                                <color key="baseForegroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </buttonConfiguration>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="1" green="0.87511742163512463" blue="0.64834544500364455" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="yrE-Nw-cY6" secondAttribute="trailing" constant="16" id="Hre-Vy-GFh"/>
+                        <constraint firstItem="rFO-Kd-801" firstAttribute="top" secondItem="Obt-R8-yKN" secondAttribute="top" constant="8" id="Jac-EG-prA"/>
+                        <constraint firstItem="rFO-Kd-801" firstAttribute="leading" secondItem="Obt-R8-yKN" secondAttribute="leading" constant="16" id="MCy-PY-PkV"/>
+                        <constraint firstAttribute="bottom" secondItem="yrE-Nw-cY6" secondAttribute="bottom" constant="16" id="POg-LS-TX9"/>
+                        <constraint firstItem="yrE-Nw-cY6" firstAttribute="top" secondItem="rFO-Kd-801" secondAttribute="bottom" constant="8" id="eJh-M1-7KV"/>
+                        <constraint firstItem="yrE-Nw-cY6" firstAttribute="leading" secondItem="Obt-R8-yKN" secondAttribute="leading" constant="16" id="w7N-nn-wBH"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="Es0-zg-MlQ"/>
+            <constraints>
+                <constraint firstItem="Es0-zg-MlQ" firstAttribute="bottom" secondItem="Obt-R8-yKN" secondAttribute="bottom" id="SsA-lN-0YC"/>
+                <constraint firstAttribute="trailing" secondItem="Obt-R8-yKN" secondAttribute="trailing" id="Vl1-Xj-8eF"/>
+                <constraint firstItem="Obt-R8-yKN" firstAttribute="leading" secondItem="Es0-zg-MlQ" secondAttribute="leading" id="XAV-7v-Ihp"/>
+                <constraint firstItem="Obt-R8-yKN" firstAttribute="top" secondItem="Es0-zg-MlQ" secondAttribute="top" id="t5u-WN-mXy"/>
+            </constraints>
+            <connections>
+                <outlet property="backgroundView" destination="Obt-R8-yKN" id="LNQ-CE-Qw0"/>
+                <outlet property="conditionButton" destination="yrE-Nw-cY6" id="HkA-Sa-VSb"/>
+                <outlet property="titleLabel" destination="rFO-Kd-801" id="6NG-yF-brm"/>
+            </connections>
+            <point key="canvasLocation" x="69" y="-50"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="magnifyingglass" catalog="system" width="128" height="115"/>
+    </resources>
+</document>
