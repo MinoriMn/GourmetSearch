@@ -42,7 +42,7 @@ class GourmetSearchAPI {
                 switch result {
                 case .success(let response):
                     print(response)
-                    promise(.success(response.shop))
+                    promise(.success(response.results.shop))
                 case .failure(let error):
                     print(error)
                     promise(.failure(error))
@@ -55,42 +55,25 @@ class GourmetSearchAPI {
 }
 
 struct GourmetSearchRequest: Request {
+    final class EntityDataParser<T: Decodable>: APIKit.DataParser {
+        var contentType: String? {
+            return "application/json"
+        }
+
+        func parse(data: Data) throws -> Any {
+            // デコードする
+            let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            return try decoder.decode(T.self, from: data)
+        }
+    }
+
     //リクエスト先のurl
     var baseURL: URL {
         return URL(string: "https://webservice.recruit.co.jp/hotpepper/gourmet")!
     }
 
     var path: String {
-//        var param: String = "?key=\(parameter.key)&format=json"
-//
-//        if let id = parameter.id {
-//            param += "&id=\(id.joined(separator:","))"
-//        }
-//        if let keyword = parameter.keyword {
-//            param += "&keyword=\(keyword)"
-//        }
-//        if let lat = parameter.lat, let lng = parameter.lng {
-//            param += "&lat=\(lat)"
-//            param += "&lng=\(lng)"
-//        }
-//        if let range = parameter.range {
-//            param += "&range=\(range.rawValue)"
-//        }
-//        if let genre = parameter.genre {
-//            param += "&genre=\(genre)"
-//        }
-//        param += "&lunch=\(parameter.lunch ? 1 : 0)"
-//        param += "&pet=\(parameter.pet ? 1 : 0)"
-//        if let order = parameter.order {
-//            param += "&order=\(order.rawValue)"
-//        }
-//        if let start = parameter.start {
-//            param += "&start=\(start)"
-//        }
-//        if let count = parameter.count {
-//            param += "&count=\(count)"
-//        }
-
         return "/v1/"
     }
 
@@ -101,12 +84,10 @@ struct GourmetSearchRequest: Request {
 
     //レスポンスデータのデコード
     func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
-        guard let data = object as? Data else {
+        guard let entity = object as? Response else {
             throw ResponseError.unexpectedObject(object)
         }
-        let jsonDecoder = JSONDecoder()
-        jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
-        return try jsonDecoder.decode(Response.self, from: data)
+        return entity
     }
 
     let parameter: Parameter
@@ -143,9 +124,10 @@ struct GourmetSearchRequest: Request {
         return params
     }
 
-//    var dataParser: DataParser {
-//        return JSONDataParser(readingOptions: [.allowFragments])
-//    }
+    var dataParser: APIKit.DataParser {
+        // 作成したEntityDataParserを使用する
+        return EntityDataParser<Response>()
+    }
 }
 
 extension GourmetSearchRequest {
@@ -182,60 +164,64 @@ extension GourmetSearchRequest {
 
 extension GourmetSearchRequest {
     struct Response: Codable {
-        // お店
-        struct Shop: Codable {
-            // お店ジャンル
-            struct Genre: Codable {
-                let code: String
-                let name: String
-            }
-
-            // ディナー予算
-            struct Budget: Codable {
-                let code: String
-                let name: String
-                let average: String
-            }
-
-            // 店舗URL
-            struct ShopURL: Codable {
-                let pc: String?
-            }
-
-            struct Photo: Codable {
-                struct PC: Codable  {
-                    let l: String?
-                    let m: String?
-                    let s: String?
+        struct Results: Codable {
+            // お店
+            struct Shop: Codable {
+                // お店ジャンル
+                struct Genre: Codable {
+                    let code: String?
+                    let name: String?
                 }
 
-                struct Mobile: Codable  {
-                    let l: String?
-                    let s: String?
+                // ディナー予算
+                struct Budget: Codable {
+                    let code: String?
+                    let name: String?
+                    let average: String?
                 }
 
-                let pc: PC
-                let mobile: Mobile
+                // 店舗URL
+                struct ShopURL: Codable {
+                    let pc: String?
+                }
+
+                struct Photo: Codable {
+                    struct PC: Codable  {
+                        let l: String?
+                        let m: String?
+                        let s: String?
+                    }
+
+                    struct Mobile: Codable  {
+                        let l: String?
+                        let s: String?
+                    }
+
+                    let pc: PC?
+                    let mobile: Mobile?
+                }
+
+                let id: String
+                let name: String
+                let logoImage: String?
+                let address: String?
+                let lat: Float?
+                let lng: Float?
+                let genre: Genre?
+                let budget: Budget?
+                let urls: ShopURL?
+                let photo: Photo?
+                let open: String?
+                let close: String?
             }
 
-            let id: String
-            let name: String
-            let logoImage: String?
-            let address: String
-            let lat: Float
-            let lng: Float
-            let genre: Genre
-            let budget: Budget
-            let urls: ShopURL
-            let photo: Photo
-            let open: String?
-            let close: String?
+            let apiVersion: String
+            let resultsAvailable: Int
+            let resultsReturned: String
+            let resultsStart: Int
+            let shop: [Shop]
         }
 
-        let apiVersion: String
-        let resultsAvailable: Int
-        let resultsReturned: Int
-        let resultsStart: Int
-        let shop: [Shop]
+        let results: Results
     }
 }

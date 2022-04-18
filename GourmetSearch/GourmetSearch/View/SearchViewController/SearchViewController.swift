@@ -65,11 +65,22 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate, Floatin
     }
 
     private func bind(to viewModel: SearchViewModel) {
+        // TODO
+        let search = searchBar.getConditionButtonTapPublisher()
+            .map { [weak self] _ -> CLLocationCoordinate2D? in
+                guard let self = self, let location = self.mapView.userLocation.location else {
+                    return nil
+                }
+                return location.coordinate
+            }
+            .eraseToAnyPublisher()
+
         let output = viewModel.transform(
             input: .init(
+                search: search,
                 locationButtonTapped: locationButton.tapPublisher,
                 conditionButtonTapped: searchBar.getConditionButtonTapPublisher(),
-                searchButtonTapped: searchButton.tapPublisher
+                searchResultButtonTapped: searchButton.tapPublisher
             )
         )
 
@@ -80,10 +91,8 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate, Floatin
                 case .failure(let error):
                     print(error)
                 }
-            }, receiveValue: { shops in
-                print("shops:", shops)
-                print("size:", shops.count)
-                print("ex:", shops.first)
+            }, receiveValue: { [weak self] shops in
+                self?.searchButton.titleLabel?.text = "\(shops.count)件"
             })
             .store(in: &cancellables)
 

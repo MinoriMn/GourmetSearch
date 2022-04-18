@@ -1,3 +1,3 @@
 import Foundation
 
-typealias Shop = GourmetSearchRequest.Response.Shop
+typealias Shop = GourmetSearchRequest.Response.Results.Shop
