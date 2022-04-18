@@ -61,6 +61,7 @@
                     <connections>
                         <outlet property="locationButton" destination="QYf-Nw-1sh" id="kx7-LO-Mjy"/>
                         <outlet property="mapView" destination="IPK-jG-5YE" id="pWw-mR-ZIt"/>
+                        <outlet property="searchButton" destination="YIB-ID-4IS" id="03o-nm-l8i"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

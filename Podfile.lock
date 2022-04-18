@@ -1,6 +1,7 @@
 PODS:
   - APIKit (5.3.0)
   - CombineCocoa (0.4.0)
+  - FloatingPanel (2.5.2)
   - R.swift (6.1.0):
     - R.swift.Library (~> 5.3.0)
   - R.swift.Library (5.3.0)
@@ -8,21 +9,24 @@ PODS:
 DEPENDENCIES:
   - APIKit (~> 5.0)
   - CombineCocoa
+  - FloatingPanel
   - R.swift
 
 SPEC REPOS:
   trunk:
     - APIKit
     - CombineCocoa
+    - FloatingPanel
     - R.swift
     - R.swift.Library
 
 SPEC CHECKSUMS:
   APIKit: f9b21088bf1575a226e815a62bb6e5ed36fb7fe3
   CombineCocoa: 68a050228ce7c53c1c5ac2c57cccf92a7f5c5085
+  FloatingPanel: 935712d7a8076630135fbbd47f717700913efef9
   R.swift: ec98ff71c4ab2f6fd01dd077e5afd15e63a4834c
   R.swift.Library: 0fc583cb55a99e28901299cc451614cad1161962
 
-PODFILE CHECKSUM: 97ead06a958481c6ae4b3a2b2de6b473fd6b1f23
+PODFILE CHECKSUM: 9153f47f75d99b2d411ceec210aed945840a857c
 
 COCOAPODS: 1.11.3

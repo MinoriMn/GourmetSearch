@@ -20,9 +20,19 @@ class SearchViewModel {
             .setFailureType(to: Error.self)
             .eraseToAnyPublisher()
 
+        let openSearchCondition = input.conditionButtonTapped
+            .setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
+
+        let openSearchResult = input.searchButtonTapped
+            .setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
+
         return .init(
             shops: shops,
-            closeToCurrentLocation: closeToCurrentLocation
+            closeToCurrentLocation: closeToCurrentLocation,
+            openSearchCondition: openSearchCondition,
+            openSearchResult: openSearchResult
         )
     }
 }
@@ -30,10 +40,14 @@ class SearchViewModel {
 extension SearchViewModel {
     struct Input {
         let locationButtonTapped: AnyPublisher<Void, Never>
+        let conditionButtonTapped: AnyPublisher<Void, Never>
+        let searchButtonTapped: AnyPublisher<Void, Never>
     }
 
     struct Output {
         let shops: AnyPublisher<[Shop], Error>
         let closeToCurrentLocation: AnyPublisher<Void, Error>
+        let openSearchCondition: AnyPublisher<Void, Error>
+        let openSearchResult: AnyPublisher<Void, Error>
     }
 }

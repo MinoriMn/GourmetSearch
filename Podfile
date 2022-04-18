@@ -9,6 +9,7 @@ target 'GourmetSearch' do
   pod 'R.swift'
   pod 'APIKit', '~> 5.0'
   pod 'CombineCocoa'
+  pod 'FloatingPanel'
 
   target 'GourmetSearchTests' do
     inherit! :search_paths

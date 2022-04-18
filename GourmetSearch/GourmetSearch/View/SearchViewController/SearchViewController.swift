@@ -3,11 +3,14 @@ import Combine
 import CombineCocoa
 import MapKit
 import CoreLocation
+import FloatingPanel
 
-class SearchViewController: UIViewController, CLLocationManagerDelegate {
+class SearchViewController: UIViewController, CLLocationManagerDelegate, FloatingPanelControllerDelegate {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var locationButton: UIButton!
-    private var searchBar: SearchBar? = nil
+    @IBOutlet weak var searchButton: UIButton!
+    private var searchBar: SearchBar!
+    private var floatingPanelController: FloatingPanelController!
 
     private var locationManager: CLLocationManager = CLLocationManager()
 
@@ -16,6 +19,11 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        floatingPanelController = FloatingPanelController()
+        floatingPanelController.delegate = self
+        floatingPanelController.set(contentViewController: ConditionViewController())
+        floatingPanelController.isRemovalInteractionEnabled = true
 
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
@@ -59,7 +67,9 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate {
     private func bind(to viewModel: SearchViewModel) {
         let output = viewModel.transform(
             input: .init(
-                locationButtonTapped: locationButton.tapPublisher
+                locationButtonTapped: locationButton.tapPublisher,
+                conditionButtonTapped: searchBar.getConditionButtonTapPublisher(),
+                searchButtonTapped: searchButton.tapPublisher
             )
         )
 
@@ -80,6 +90,13 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate {
         output.closeToCurrentLocation
             .sink(receiveCompletion: { _ in }, receiveValue: { [weak self] _ in
                 self?.closeToCurrentLocation(delta: 0.03)
+            })
+            .store(in: &cancellables)
+
+        output.openSearchCondition
+            .sink(receiveCompletion: { _ in }, receiveValue: { [weak self] _ in
+                guard let self = self else { return }
+                self.floatingPanelController.addPanel(toParent: self)
             })
             .store(in: &cancellables)
     }
