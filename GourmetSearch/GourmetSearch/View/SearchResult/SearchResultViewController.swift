@@ -1,8 +1,12 @@
 import Foundation
 import Combine
 import CombineCocoa
+import UIKit
 
-class ConditionViewController: UIViewController{
+class SearchResultViewController: UIViewController {
+//    @IBOutlet private var distanceGesture: UITapGestureRecognizer!
+//    @IBOutlet private var distanceText: UILabel!
+
 //    private let viewModel: SearchViewModel = .init()
     private var cancellables: [AnyCancellable] = []
 

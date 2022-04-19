@@ -10,7 +10,10 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate, Floatin
     @IBOutlet weak var locationButton: UIButton!
     @IBOutlet weak var searchButton: UIButton!
     private var searchBar: SearchBar!
-    private var floatingPanelController: FloatingPanelController!
+//    private var conditionFloatingPanelController: FloatingPanelController!
+    private var conditionViewController: ConditionViewController!
+    private var searchResultFloatingPanelController: FloatingPanelController!
+    private var searchResultViewController: SearchResultViewController!
 
     private var locationManager: CLLocationManager = CLLocationManager()
 
@@ -18,6 +21,8 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate, Floatin
     private var cancellables: [AnyCancellable] = []
 
     private var pins: [ShopAnnotation] = []
+
+    private let receiveSearchCondition = PassthroughSubject<SearchCondition, Never>()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,15 +33,31 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate, Floatin
         let filter = MKPointOfInterestFilter(excluding: category)
         mapView.pointOfInterestFilter = filter
 
-        floatingPanelController = FloatingPanelController()
-        floatingPanelController.delegate = self
-        floatingPanelController.set(contentViewController: ConditionViewController())
-        floatingPanelController.isRemovalInteractionEnabled = true
+        let conditionViewController = R.storyboard.conditionViewController.instantiateInitialViewController { [weak self] coder in
+            guard let self = self else { return nil }
+            return ConditionViewController(
+                coder: coder,
+                initSearchConditionPublisher: self.viewModel.sendSearchCondition.eraseToAnyPublisher(),
+                searchConditionPublisher: self.receiveSearchCondition
+            )
+        } as! ConditionViewController
+        self.conditionViewController = conditionViewController
+//        conditionFloatingPanelController = FloatingPanelController()
+//        conditionFloatingPanelController.delegate = self
+//        conditionFloatingPanelController.set(contentViewController: self.conditionViewController )
+//        conditionFloatingPanelController.isRemovalInteractionEnabled = true
+
+        let searchResultViewController = R.storyboard.searchResultViewController.instantiateInitialViewController()
+        self.searchResultViewController = searchResultViewController
+        searchResultFloatingPanelController = FloatingPanelController()
+        searchResultFloatingPanelController.delegate = self
+        searchResultFloatingPanelController.set(contentViewController: self.searchResultViewController )
+        searchResultFloatingPanelController.isRemovalInteractionEnabled = true
 
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
 
-        let searchBar = SearchBar.make(condition: "aaaaaa")
+        let searchBar = SearchBar.make(condition: "")
         searchBar.frame.size = CGSize(width: 100.0, height: 100.0)
         view.addSubview(searchBar)
         searchBar.translatesAutoresizingMaskIntoConstraints = false
@@ -73,13 +94,12 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate, Floatin
     }
 
     private func bind(to viewModel: SearchViewModel) {
-        // TODO
-        let search = searchBar.getConditionButtonTapPublisher()
-            .map { [weak self] _ -> CLLocationCoordinate2D? in
+        let search = receiveSearchCondition
+            .map { [weak self] searchCondition -> (SearchCondition, CLLocationCoordinate2D?) in
                 guard let self = self, let location = self.mapView.userLocation.location else {
-                    return nil
+                    return (searchCondition, nil)
                 }
-                return location.coordinate
+                return (searchCondition, location.coordinate)
             }
             .eraseToAnyPublisher()
 
@@ -116,7 +136,7 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate, Floatin
                 for shop in shops {
                     guard let lat = shop.lat, let lng = shop.lng else { continue }
                     let coord = CLLocationCoordinate2D(latitude: lat, longitude: lng)
-                    let pin = ShopAnnotation(coord, glyphImage: foodImage, glyphTintColor: .white, markerTintColor: .orange)
+                    let pin = ShopAnnotation(coord, glyphImage: foodImage, glyphTintColor: .white, markerTintColor: R.color.accentColor() ?? .orange)
                     pin.title = shop.name
                     newPins.append(pin)
                 }
@@ -134,17 +154,29 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate, Floatin
         output.openSearchCondition
             .sink(receiveCompletion: { _ in }, receiveValue: { [weak self] _ in
                 guard let self = self else { return }
-                self.floatingPanelController.addPanel(toParent: self)
+                self.conditionViewController.modalPresentationStyle = .pageSheet
+                self.present(self.conditionViewController, animated: true)
+            })
+            .store(in: &cancellables)
+
+        output.openSearchResult
+            .sink(receiveCompletion: { _ in }, receiveValue: { [weak self] _ in
+                guard let self = self else { return }
+                self.searchResultFloatingPanelController.addPanel(toParent: self)
             })
             .store(in: &cancellables)
     }
 
     private func closeToCurrentLocation(delta: Double) {
         if let coordinate = mapView.userLocation.location?.coordinate {
-            let span = MKCoordinateSpan(latitudeDelta: delta, longitudeDelta: delta)
-            let region = MKCoordinateRegion(center: coordinate, span: span)
-            mapView.setRegion(region, animated: true)
+            closeToLocation(coordinate: coordinate, delta: delta)
         }
+    }
+
+    private func closeToLocation(coordinate: CLLocationCoordinate2D, delta: Double) {
+        let span = MKCoordinateSpan(latitudeDelta: delta, longitudeDelta: delta)
+        let region = MKCoordinateRegion(center: coordinate, span: span)
+        mapView.setRegion(region, animated: true)
     }
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {

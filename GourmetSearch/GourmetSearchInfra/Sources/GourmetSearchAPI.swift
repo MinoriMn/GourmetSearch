@@ -145,12 +145,27 @@ extension GourmetSearchRequest {
         let start: Int?
         let count: Int?
 
-        enum Range: Int {
+        enum Range: Int, CaseIterable {
             case u300m = 1
             case u500m = 2
             case u1000m = 3
             case u2000m = 4
             case u3000m = 5
+
+            func stringValue() -> String {
+                switch self {
+                case .u300m:
+                    return "300m以内"
+                case .u500m:
+                    return "500m以内"
+                case .u1000m:
+                    return "1km以内"
+                case .u2000m:
+                    return "2km以内"
+                case .u3000m:
+                    return "3km以内"
+                }
+            }
         }
 
         enum Order: Int {
