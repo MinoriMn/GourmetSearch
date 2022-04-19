@@ -121,8 +121,9 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate, Floatin
                 }
             }, receiveValue: { [weak self] shops in
                 guard let self = self else { return }
+
                 // 件数表示
-                self.searchButton.titleLabel?.text = "\(shops.count)件"
+                self.searchButton.setTitle("\(shops.count)件", for: .normal)
 
                 // ピン情報
                 for pin in self.pins {
@@ -154,6 +155,7 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate, Floatin
         output.openSearchCondition
             .sink(receiveCompletion: { _ in }, receiveValue: { [weak self] _ in
                 guard let self = self else { return }
+                self.searchResultFloatingPanelController.removePanelFromParent(animated: true)
                 self.conditionViewController.modalPresentationStyle = .pageSheet
                 self.present(self.conditionViewController, animated: true)
             })
@@ -164,6 +166,21 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate, Floatin
                 guard let self = self else { return }
                 self.searchResultFloatingPanelController.addPanel(toParent: self)
             })
+            .store(in: &cancellables)
+
+        Publishers.Merge(receiveSearchCondition, viewModel.sendSearchCondition.eraseToAnyPublisher())
+            .receive(on: RunLoop.main)
+            .sink { [weak self] searchCondition in
+                self?.setConditionText(searchConditon: searchCondition)
+            }
+            .store(in: &cancellables)
+
+        // 初期検索
+        Just(()).delay(for: .seconds(0.5), scheduler: RunLoop.main)
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                self.receiveSearchCondition.send(self.viewModel.searchCondition)
+            }
             .store(in: &cancellables)
     }
 
@@ -177,6 +194,34 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate, Floatin
         let span = MKCoordinateSpan(latitudeDelta: delta, longitudeDelta: delta)
         let region = MKCoordinateRegion(center: coordinate, span: span)
         mapView.setRegion(region, animated: true)
+    }
+
+    private func setConditionText(searchConditon: SearchCondition) {
+        var text = "\(searchConditon.range.stringValue())"
+        let includedBoolConditions = searchConditon.isLunch || searchConditon.isPet || searchConditon.isParking
+        if let keyword = searchConditon.keyword {
+            text += "で「\(keyword)」に関連する"
+        } else {
+            text += "の"
+        }
+        if includedBoolConditions {
+            var isFirst = true
+            if searchConditon.isLunch {
+                text += "ランチあり"
+                isFirst = false
+            }
+            if searchConditon.isPet {
+                text += "\(isFirst ? "" : "・")ペット可"
+                isFirst = false
+            }
+            if searchConditon.isParking {
+                text += "\(isFirst ? "" : "・")駐車場有"
+                isFirst = false
+            }
+            text += "な"
+        }
+        text += "お店"
+        searchBar.setCondition(condition: text)
     }
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {

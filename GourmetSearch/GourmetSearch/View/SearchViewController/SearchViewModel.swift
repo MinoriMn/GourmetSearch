@@ -8,7 +8,7 @@ class SearchViewModel {
 
     private var shops: [Shop] = []
 
-    private var searchCondition: SearchCondition = .init(
+    private (set) public var searchCondition: SearchCondition = .init(
         keyword: nil,
         coord: .init(latitude: 35.688904, longitude: 139.696422),
         range: .u1000m,

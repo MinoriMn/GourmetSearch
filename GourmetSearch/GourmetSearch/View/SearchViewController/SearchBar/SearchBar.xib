@@ -26,7 +26,7 @@
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yrE-Nw-cY6" userLabel="ConditionButton">
                             <rect key="frame" x="16" y="34" width="288" height="430"/>
                             <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="filled" image="magnifyingglass" catalog="system" cornerStyle="small">
+                            <buttonConfiguration key="configuration" style="filled" image="magnifyingglass" catalog="system" title="testtest" cornerStyle="small">
                                 <color key="baseForegroundColor" name="TextColor"/>
                                 <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </buttonConfiguration>

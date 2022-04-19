@@ -38,7 +38,7 @@
                                     <constraint firstAttribute="width" constant="150" id="hXV-we-AGJ"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" image="list.dash" catalog="system" title="90件" cornerStyle="capsule">
+                                <buttonConfiguration key="configuration" style="filled" image="list.dash" catalog="system" title="0件" cornerStyle="capsule">
                                     <color key="baseForegroundColor" name="TextColor"/>
                                     <color key="baseBackgroundColor" name="LightAccentColor"/>
                                 </buttonConfiguration>
