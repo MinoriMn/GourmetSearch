@@ -8,30 +8,39 @@ class SearchViewModel {
 
     private var shops: [Shop] = []
 
-    private var searchCondition: SearchCondition = .init(
+    private (set) public var searchCondition: SearchCondition = .init(
         keyword: nil,
         coord: .init(latitude: 35.688904, longitude: 139.696422),
-        range: .u300m,
+        range: .u1000m,
         genre: nil,
-        order: .recommendation
+        order: .recommendation,
+        isLunch: false,
+        isPet: false,
+        isParking: false
     )
+    let sendSearchCondition = PassthroughSubject<SearchCondition, Never>()
+    let scrollToShop = PassthroughSubject<Shop, Never>()
 
     func transform(input: Input) -> Output {
         cancellables.forEach { $0.cancel() }
         cancellables.removeAll()
 
-        let shops = input.search.flatMap { [weak self] coord -> AnyPublisher<[Shop], Error> in
+        let shops = input.search.flatMap { [weak self] searchCondition, coord -> AnyPublisher<[Shop], Error> in
             guard let self = self else { return Fail(error: CommonError.couldNotFoundSelf).eraseToAnyPublisher() }
             guard let coord = coord else { return Fail(error: CommonError.couldNotGetUserLocation).eraseToAnyPublisher() }
 
+            self.searchCondition = searchCondition
             self.searchCondition.coord = coord
 
             return self.usecase.shopsSearchByGPS(
                 keyword: self.searchCondition.keyword,
-                lat: Float(self.searchCondition.coord.latitude),
-                lng: Float(self.searchCondition.coord.longitude),
+                lat: self.searchCondition.coord.latitude,
+                lng: self.searchCondition.coord.longitude,
                 range: self.searchCondition.range,
                 genre: self.searchCondition.genre,
+                lunch: self.searchCondition.isLunch,
+                pet: self.searchCondition.isPet,
+                parking: self.searchCondition.isParking,
                 order: self.searchCondition.order
             )
         }
@@ -47,11 +56,27 @@ class SearchViewModel {
 
         let openSearchCondition = input.conditionButtonTapped
             .setFailureType(to: Error.self)
+            .map { [weak self] void -> Void in
+                guard let self = self else { return void }
+                self.sendSearchCondition.send(self.searchCondition)
+                return void
+            }
             .eraseToAnyPublisher()
 
-        let openSearchResult = input.searchResultButtonTapped
+        let openSearchResult = Publishers.Merge(input.searchResultButtonTapped, input.setectedPin.map { _ in Void() }.eraseToAnyPublisher())
             .setFailureType(to: Error.self)
             .eraseToAnyPublisher()
+
+        input.setectedPin
+            .sink { [weak self] index in
+                guard let self = self else { return /*TODO*/ }
+                guard !self.shops.isEmpty, index >= 0, index < self.shops.count else {
+                    print(ModelError.notFindShopByIndex)
+                    return /*TODO*/
+                }
+                self.scrollToShop.send(self.shops[index])
+            }
+            .store(in: &cancellables)
 
         return .init(
             shops: shops,
@@ -63,21 +88,12 @@ class SearchViewModel {
 }
 
 extension SearchViewModel {
-    struct SearchCondition {
-        var keyword: String?
-        var coord: CLLocationCoordinate2D
-        var range: Range
-        var genre: String?
-        var order: Order
-    }
-}
-
-extension SearchViewModel {
     struct Input {
-        let search: AnyPublisher<CLLocationCoordinate2D?, Never>
+        let search: AnyPublisher<(SearchCondition, CLLocationCoordinate2D?), Never>
         let locationButtonTapped: AnyPublisher<Void, Never>
         let conditionButtonTapped: AnyPublisher<Void, Never>
         let searchResultButtonTapped: AnyPublisher<Void, Never>
+        let setectedPin: AnyPublisher<Int, Never>
     }
 
     struct Output {
@@ -85,5 +101,11 @@ extension SearchViewModel {
         let closeToCurrentLocation: AnyPublisher<Void, Error>
         let openSearchCondition: AnyPublisher<Void, Error>
         let openSearchResult: AnyPublisher<Void, Error>
+    }
+}
+
+extension SearchViewModel {
+    enum ModelError: Error {
+        case notFindShopByIndex
     }
 }

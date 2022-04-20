@@ -10,6 +10,7 @@ target 'GourmetSearch' do
   pod 'APIKit', '~> 5.0'
   pod 'CombineCocoa'
   pod 'FloatingPanel'
+  pod 'Nuke', '~> 9.0'
 
   target 'GourmetSearchTests' do
     inherit! :search_paths

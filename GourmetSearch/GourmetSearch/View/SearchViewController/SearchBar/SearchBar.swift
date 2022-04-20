@@ -35,7 +35,7 @@ class SearchBar: UIView {
     }
 
     func setCondition(condition: String) {
-        conditionButton.titleLabel?.text = condition
+        conditionButton.setTitle(condition, for: .normal)
     }
 
     func getConditionButtonTapPublisher() -> AnyPublisher<Void, Never> {

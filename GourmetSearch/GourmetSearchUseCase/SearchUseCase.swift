@@ -9,12 +9,25 @@ class SearchUseCase {
 
     public func shopsSearchByGPS(
         keyword: String? = nil,
-        lat: Float? = nil,
-        lng: Float? = nil,
-        range: Range? = nil,
+        lat: Double? = nil,
+        lng: Double? = nil,
+        range: GourmetSearchRequest.Parameter.Range? = nil,
         genre: String? = nil,
-        order: Order? = nil
+        lunch: Bool = false,
+        pet: Bool = false,
+        parking: Bool = false,
+        order: GourmetSearchRequest.Parameter.Order? = nil
     ) -> AnyPublisher<[Shop], Error> {
-        shopsRepository.searchShops(keyword: keyword, lat: lat, lng: lng, range: range, genre: genre, order: order)
+        shopsRepository.searchShops(
+            keyword: keyword,
+            lat: lat,
+            lng: lng,
+            range: range,
+            genre: genre,
+            lunch: lunch,
+            pet: pet,
+            parking: parking,
+            order: order
+        )
     }
 }

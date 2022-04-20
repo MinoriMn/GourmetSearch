@@ -11,10 +11,13 @@ class GourmetSearchAPI {
     public func searchShops(
         id: [String]? = nil,
         keyword: String? = nil,
-        lat: Float? = nil,
-        lng: Float? = nil,
+        lat: Double? = nil,
+        lng: Double? = nil,
         range: GourmetSearchRequest.Parameter.Range? = nil,
         genre: String? = nil,
+        lunch: Bool = false,
+        pet: Bool = false,
+        parking: Bool = false,
         order: GourmetSearchRequest.Parameter.Order? = nil,
         start: Int? = nil,
         count: Int? = nil
@@ -32,6 +35,9 @@ class GourmetSearchAPI {
                 lng: lng,
                 range: range,
                 genre: genre,
+                lunch: lunch,
+                pet: pet,
+                parking: parking,
                 order: order,
                 start: start,
                 count: count
@@ -111,6 +117,7 @@ struct GourmetSearchRequest: Request {
         }
         params["lunch"] = parameter.lunch ? 1 : 0
         params["pet"] = parameter.pet ? 1 : 0
+        params["parking"] = parameter.parking ? 1 : 0
         if let order = parameter.order {
             params["order"] = order.rawValue
         }
@@ -135,22 +142,38 @@ extension GourmetSearchRequest {
         let key: String
         let id: [String]?
         let keyword: String?
-        let lat: Float?
-        let lng: Float?
+        let lat: Double?
+        let lng: Double?
         let range: Range?
         let genre: String?
-        let lunch: Bool = false
-        let pet: Bool = false
+        let lunch: Bool
+        let pet: Bool
+        let parking: Bool
         let order: Order?
         let start: Int?
         let count: Int?
 
-        enum Range: Int {
+        enum Range: Int, CaseIterable {
             case u300m = 1
             case u500m = 2
             case u1000m = 3
             case u2000m = 4
             case u3000m = 5
+
+            func stringValue() -> String {
+                switch self {
+                case .u300m:
+                    return "300m以内"
+                case .u500m:
+                    return "500m以内"
+                case .u1000m:
+                    return "1km以内"
+                case .u2000m:
+                    return "2km以内"
+                case .u3000m:
+                    return "3km以内"
+                }
+            }
         }
 
         enum Order: Int {
@@ -205,8 +228,8 @@ extension GourmetSearchRequest {
                 let name: String
                 let logoImage: String?
                 let address: String?
-                let lat: Float?
-                let lng: Float?
+                let lat: Double?
+                let lng: Double?
                 let genre: Genre?
                 let budget: Budget?
                 let urls: ShopURL?
@@ -225,3 +248,4 @@ extension GourmetSearchRequest {
         let results: Results
     }
 }
+

@@ -3,6 +3,7 @@
     <device id="retina3_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,18 +21,18 @@
                             <rect key="frame" x="16" y="8" width="92" height="18"/>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <nil key="highlightedColor"/>
+                            <color key="highlightedColor" name="TextColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yrE-Nw-cY6" userLabel="ConditionButton">
                             <rect key="frame" x="16" y="34" width="288" height="430"/>
                             <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="filled" image="magnifyingglass" catalog="system" cornerStyle="small">
-                                <color key="baseForegroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <buttonConfiguration key="configuration" style="filled" image="magnifyingglass" catalog="system" title="testtest" cornerStyle="small">
+                                <color key="baseForegroundColor" name="TextColor"/>
                                 <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </buttonConfiguration>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" red="1" green="0.87511742163512463" blue="0.64834544500364455" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" name="LightAccentColor"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="yrE-Nw-cY6" secondAttribute="trailing" constant="16" id="Hre-Vy-GFh"/>
                         <constraint firstItem="rFO-Kd-801" firstAttribute="top" secondItem="Obt-R8-yKN" secondAttribute="top" constant="8" id="Jac-EG-prA"/>
@@ -59,5 +60,11 @@
     </objects>
     <resources>
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>
+        <namedColor name="LightAccentColor">
+            <color red="1" green="0.8666666666666667" blue="0.74901960784313726" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="TextColor">
+            <color red="0.19607843137254902" green="0.19607843137254902" blue="0.19607843137254902" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

@@ -16,11 +16,14 @@ class ShopsRepository {
 
     public func searchShops(
         keyword: String? = nil,
-        lat: Float? = nil,
-        lng: Float? = nil,
-        range: Range? = nil,
+        lat: Double? = nil,
+        lng: Double? = nil,
+        range: GourmetSearchRequest.Parameter.Range? = nil,
         genre: String? = nil,
-        order: Order? = nil
+        lunch: Bool = false,
+        pet: Bool = false,
+        parking: Bool = false,
+        order: GourmetSearchRequest.Parameter.Order? = nil
     ) -> AnyPublisher<[Shop], Error> {
         gourmetSearchAPI.searchShops(
             keyword: keyword,
@@ -28,9 +31,12 @@ class ShopsRepository {
             lng: lng,
             range: range,
             genre: genre,
+            lunch: lunch,
+            pet: pet,
+            parking: parking,
             order: order,
             start: 1,
-            count: 50
+            count: 30
         )
     }
 }
