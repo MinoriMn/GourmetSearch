@@ -6,6 +6,7 @@ import Nuke
 
 class ShopDetailViewController: UIViewController {
     @IBOutlet private weak var imageView: UIImageView!
+    @IBOutlet private weak var nameLabel: UILabel!
     @IBOutlet private weak var addressLabel: UILabel!
     @IBOutlet private weak var urlLabel: UILabel!
     @IBOutlet private weak var openingLabel: UILabel!
@@ -27,8 +28,6 @@ class ShopDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationController?.navigationBar.isHidden = false
-
         bind(to: viewModel)
     }
 
@@ -37,7 +36,7 @@ class ShopDetailViewController: UIViewController {
 
         output.shop
             .sink { [weak self] shop in
-                self?.title = shop.name
+                self?.nameLabel.text = shop.name
                 if let imageView = self?.imageView, let url = URL(string: shop.photo?.pc?.l ?? "") {
                     Nuke.loadImage(with: url, into: imageView)
                 }
