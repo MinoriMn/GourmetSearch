@@ -45,6 +45,7 @@ class ConditionViewController: UIViewController {
         self.parkingToggleButton = .make(name: "駐車場あり", image: parkingImage)
 
 
+        buttonsGridLayout.gridSize = 4
         buttonsGridLayout.addSubview(lunchToggleButton)
         buttonsGridLayout.addSubview(petToggleButton)
         buttonsGridLayout.addSubview(parkingToggleButton)

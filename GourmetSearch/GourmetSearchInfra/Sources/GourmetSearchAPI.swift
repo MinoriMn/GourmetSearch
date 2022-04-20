@@ -15,6 +15,9 @@ class GourmetSearchAPI {
         lng: Double? = nil,
         range: GourmetSearchRequest.Parameter.Range? = nil,
         genre: String? = nil,
+        lunch: Bool = false,
+        pet: Bool = false,
+        parking: Bool = false,
         order: GourmetSearchRequest.Parameter.Order? = nil,
         start: Int? = nil,
         count: Int? = nil
@@ -32,6 +35,9 @@ class GourmetSearchAPI {
                 lng: lng,
                 range: range,
                 genre: genre,
+                lunch: lunch,
+                pet: pet,
+                parking: parking,
                 order: order,
                 start: start,
                 count: count
@@ -111,6 +117,7 @@ struct GourmetSearchRequest: Request {
         }
         params["lunch"] = parameter.lunch ? 1 : 0
         params["pet"] = parameter.pet ? 1 : 0
+        params["parking"] = parameter.parking ? 1 : 0
         if let order = parameter.order {
             params["order"] = order.rawValue
         }
@@ -139,8 +146,9 @@ extension GourmetSearchRequest {
         let lng: Double?
         let range: Range?
         let genre: String?
-        let lunch: Bool = false
-        let pet: Bool = false
+        let lunch: Bool
+        let pet: Bool
+        let parking: Bool
         let order: Order?
         let start: Int?
         let count: Int?

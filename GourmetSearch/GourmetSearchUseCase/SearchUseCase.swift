@@ -11,10 +11,23 @@ class SearchUseCase {
         keyword: String? = nil,
         lat: Double? = nil,
         lng: Double? = nil,
-        range: Range? = nil,
+        range: GourmetSearchRequest.Parameter.Range? = nil,
         genre: String? = nil,
-        order: Order? = nil
+        lunch: Bool = false,
+        pet: Bool = false,
+        parking: Bool = false,
+        order: GourmetSearchRequest.Parameter.Order? = nil
     ) -> AnyPublisher<[Shop], Error> {
-        shopsRepository.searchShops(keyword: keyword, lat: lat, lng: lng, range: range, genre: genre, order: order)
+        shopsRepository.searchShops(
+            keyword: keyword,
+            lat: lat,
+            lng: lng,
+            range: range,
+            genre: genre,
+            lunch: lunch,
+            pet: pet,
+            parking: parking,
+            order: order
+        )
     }
 }

@@ -31,13 +31,15 @@ class SearchViewModel {
             self.searchCondition = searchCondition
             self.searchCondition.coord = coord
 
-            // TODO: isLunchなど
             return self.usecase.shopsSearchByGPS(
                 keyword: self.searchCondition.keyword,
                 lat: self.searchCondition.coord.latitude,
                 lng: self.searchCondition.coord.longitude,
                 range: self.searchCondition.range,
                 genre: self.searchCondition.genre,
+                lunch: self.searchCondition.isLunch,
+                pet: self.searchCondition.isPet,
+                parking: self.searchCondition.isParking,
                 order: self.searchCondition.order
             )
         }

@@ -40,6 +40,13 @@
 		C9E83C00280E83D900D83759 /* ConditionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E83BFF280E83D900D83759 /* ConditionViewModel.swift */; };
 		C9E83C02280E919800D83759 /* SearchCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E83C01280E919800D83759 /* SearchCondition.swift */; };
 		C9E83C04280E9E9900D83759 /* PickerKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E83C03280E9E9900D83759 /* PickerKeyboard.swift */; };
+		C9E83C06280ED9DB00D83759 /* SearchResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E83C05280ED9DB00D83759 /* SearchResultViewModel.swift */; };
+		C9E83C0A280EDC9B00D83759 /* ShopCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E83C08280EDC9B00D83759 /* ShopCollectionViewCell.swift */; };
+		C9E83C0B280EDC9B00D83759 /* ShopCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9E83C09280EDC9B00D83759 /* ShopCollectionViewCell.xib */; };
+		C9E83C0D280F2F4300D83759 /* CarouselCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E83C0C280F2F4300D83759 /* CarouselCollectionViewFlowLayout.swift */; };
+		C9E83C0F280F78CE00D83759 /* ShopDetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C9E83C0E280F78CE00D83759 /* ShopDetailViewController.storyboard */; };
+		C9E83C12280F790800D83759 /* ShopDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E83C11280F790800D83759 /* ShopDetailViewController.swift */; };
+		C9E83C14280F795200D83759 /* ShopDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E83C13280F795200D83759 /* ShopDetailViewModel.swift */; };
 		CF546922E654CB5646433FD2 /* Pods_GourmetSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61DF26A141AE89140D9A017D /* Pods_GourmetSearch.framework */; };
 /* End PBXBuildFile section */
 
@@ -103,6 +110,13 @@
 		C9E83BFF280E83D900D83759 /* ConditionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionViewModel.swift; sourceTree = "<group>"; };
 		C9E83C01280E919800D83759 /* SearchCondition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCondition.swift; sourceTree = "<group>"; };
 		C9E83C03280E9E9900D83759 /* PickerKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerKeyboard.swift; sourceTree = "<group>"; };
+		C9E83C05280ED9DB00D83759 /* SearchResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewModel.swift; sourceTree = "<group>"; };
+		C9E83C08280EDC9B00D83759 /* ShopCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopCollectionViewCell.swift; sourceTree = "<group>"; };
+		C9E83C09280EDC9B00D83759 /* ShopCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShopCollectionViewCell.xib; sourceTree = "<group>"; };
+		C9E83C0C280F2F4300D83759 /* CarouselCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		C9E83C0E280F78CE00D83759 /* ShopDetailViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ShopDetailViewController.storyboard; sourceTree = "<group>"; };
+		C9E83C11280F790800D83759 /* ShopDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopDetailViewController.swift; sourceTree = "<group>"; };
+		C9E83C13280F795200D83759 /* ShopDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopDetailViewModel.swift; sourceTree = "<group>"; };
 		CEADE73CA19C928D63ACF2D9 /* Pods-GourmetSearchTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GourmetSearchTests.debug.xcconfig"; path = "Target Support Files/Pods-GourmetSearchTests/Pods-GourmetSearchTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E893A7DA9DD015C8948DFA80 /* Pods_GourmetSearchTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GourmetSearchTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -272,6 +286,7 @@
 				C9C960F2280C5E0D0002630B /* Condition */,
 				C95BA93D2801BA43007A9BDC /* LaunchScreen */,
 				C95BA93C2801B9F3007A9BDC /* SearchViewController */,
+				C9E83C10280F78E100D83759 /* ShopDetail */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -351,8 +366,10 @@
 		C9E83BF0280D507C00D83759 /* SearchResult */ = {
 			isa = PBXGroup;
 			children = (
+				C9E83C07280EDB1F00D83759 /* CollectionCell */,
 				C9E83BF1280D50A900D83759 /* SearchResultViewController.storyboard */,
 				C9E83BF5280D631B00D83759 /* SearchResultViewController.swift */,
+				C9E83C05280ED9DB00D83759 /* SearchResultViewModel.swift */,
 			);
 			path = SearchResult;
 			sourceTree = "<group>";
@@ -371,8 +388,28 @@
 			children = (
 				C9E83BFD280E7C3A00D83759 /* GirdLayoutView.swift */,
 				C9E83C03280E9E9900D83759 /* PickerKeyboard.swift */,
+				C9E83C0C280F2F4300D83759 /* CarouselCollectionViewFlowLayout.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		C9E83C07280EDB1F00D83759 /* CollectionCell */ = {
+			isa = PBXGroup;
+			children = (
+				C9E83C08280EDC9B00D83759 /* ShopCollectionViewCell.swift */,
+				C9E83C09280EDC9B00D83759 /* ShopCollectionViewCell.xib */,
+			);
+			path = CollectionCell;
+			sourceTree = "<group>";
+		};
+		C9E83C10280F78E100D83759 /* ShopDetail */ = {
+			isa = PBXGroup;
+			children = (
+				C9E83C0E280F78CE00D83759 /* ShopDetailViewController.storyboard */,
+				C9E83C11280F790800D83759 /* ShopDetailViewController.swift */,
+				C9E83C13280F795200D83759 /* ShopDetailViewModel.swift */,
+			);
+			path = ShopDetail;
 			sourceTree = "<group>";
 		};
 		EB8E2FBC2A6CBA7E90DED9B0 /* Frameworks */ = {
@@ -495,9 +532,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9E83C0F280F78CE00D83759 /* ShopDetailViewController.storyboard in Resources */,
 				C9C960ED280C4E560002630B /* SearchBar.xib in Resources */,
 				C95BA9112801B46F007A9BDC /* LaunchScreen.storyboard in Resources */,
 				C9C960C3280BC7810002630B /* apikey.plist in Resources */,
+				C9E83C0B280EDC9B00D83759 /* ShopCollectionViewCell.xib in Resources */,
 				C9E83BF2280D50A900D83759 /* SearchResultViewController.storyboard in Resources */,
 				C95BA90E2801B46F007A9BDC /* Assets.xcassets in Resources */,
 				C95BA90C2801B46D007A9BDC /* SearchViewController.storyboard in Resources */,
@@ -654,16 +693,21 @@
 				C9E83C02280E919800D83759 /* SearchCondition.swift in Sources */,
 				C9C960CA280BCF440002630B /* CommonError.swift in Sources */,
 				C95BA9092801B46D007A9BDC /* SearchViewController.swift in Sources */,
+				C9E83C12280F790800D83759 /* ShopDetailViewController.swift in Sources */,
 				C95BA9052801B46D007A9BDC /* AppDelegate.swift in Sources */,
 				C9E83C04280E9E9900D83759 /* PickerKeyboard.swift in Sources */,
+				C9E83C06280ED9DB00D83759 /* SearchResultViewModel.swift in Sources */,
 				C9C960BF280B9A330002630B /* Shop.swift in Sources */,
 				C9C960CC280BDC6B0002630B /* SearchViewModel.swift in Sources */,
 				C9E83BF4280D5CBD00D83759 /* Rswift+.swift in Sources */,
 				C9E83BF6280D631B00D83759 /* SearchResultViewController.swift in Sources */,
+				C9E83C14280F795200D83759 /* ShopDetailViewModel.swift in Sources */,
 				C9C960F6280C5E570002630B /* ConditionViewController.swift in Sources */,
 				C9E83BFE280E7C3A00D83759 /* GirdLayoutView.swift in Sources */,
 				C9E83BEF280D43B800D83759 /* ShopAnnotaion.swift in Sources */,
 				C9C960C8280BCAEC0002630B /* ShopsRepository.swift in Sources */,
+				C9E83C0A280EDC9B00D83759 /* ShopCollectionViewCell.swift in Sources */,
+				C9E83C0D280F2F4300D83759 /* CarouselCollectionViewFlowLayout.swift in Sources */,
 				C9E83BFB280D680600D83759 /* ToggleButton.swift in Sources */,
 				C9C960CE280BDEB40002630B /* SearchUseCase.swift in Sources */,
 				C95BA9072801B46D007A9BDC /* SceneDelegate.swift in Sources */,

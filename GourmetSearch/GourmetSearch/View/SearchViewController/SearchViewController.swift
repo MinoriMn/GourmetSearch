@@ -23,6 +23,7 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate, Floatin
     private var pins: [ShopAnnotation] = []
 
     private let receiveSearchCondition = PassthroughSubject<SearchCondition, Never>()
+    private let sendShopsResult = PassthroughSubject<[Shop], Never>()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,7 +48,13 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate, Floatin
 //        conditionFloatingPanelController.set(contentViewController: self.conditionViewController )
 //        conditionFloatingPanelController.isRemovalInteractionEnabled = true
 
-        let searchResultViewController = R.storyboard.searchResultViewController.instantiateInitialViewController()
+        let searchResultViewController = R.storyboard.searchResultViewController.instantiateInitialViewController { [weak self] coder in
+            guard let self = self else { return nil }
+            return SearchResultViewController(
+                coder: coder,
+                shopsPublisher: self.sendShopsResult.eraseToAnyPublisher()
+            )
+        } as! SearchResultViewController
         self.searchResultViewController = searchResultViewController
         searchResultFloatingPanelController = FloatingPanelController()
         searchResultFloatingPanelController.delegate = self
@@ -143,6 +150,8 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate, Floatin
                 }
                 self.pins = newPins
                 self.mapView.showAnnotations(newPins, animated: true)
+
+                self.sendShopsResult.send(shops)
             })
             .store(in: &cancellables)
 
