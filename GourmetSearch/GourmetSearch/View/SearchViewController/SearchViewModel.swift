@@ -19,6 +19,7 @@ class SearchViewModel {
         isParking: false
     )
     let sendSearchCondition = PassthroughSubject<SearchCondition, Never>()
+    let scrollToShop = PassthroughSubject<Shop, Never>()
 
     func transform(input: Input) -> Output {
         cancellables.forEach { $0.cancel() }
@@ -62,9 +63,20 @@ class SearchViewModel {
             }
             .eraseToAnyPublisher()
 
-        let openSearchResult = input.searchResultButtonTapped
+        let openSearchResult = Publishers.Merge(input.searchResultButtonTapped, input.setectedPin.map { _ in Void() }.eraseToAnyPublisher())
             .setFailureType(to: Error.self)
             .eraseToAnyPublisher()
+
+        input.setectedPin
+            .sink { [weak self] index in
+                guard let self = self else { return /*TODO*/ }
+                guard !self.shops.isEmpty, index >= 0, index < self.shops.count else {
+                    print(ModelError.notFindShopByIndex)
+                    return /*TODO*/
+                }
+                self.scrollToShop.send(self.shops[index])
+            }
+            .store(in: &cancellables)
 
         return .init(
             shops: shops,
@@ -81,6 +93,7 @@ extension SearchViewModel {
         let locationButtonTapped: AnyPublisher<Void, Never>
         let conditionButtonTapped: AnyPublisher<Void, Never>
         let searchResultButtonTapped: AnyPublisher<Void, Never>
+        let setectedPin: AnyPublisher<Int, Never>
     }
 
     struct Output {
@@ -88,5 +101,11 @@ extension SearchViewModel {
         let closeToCurrentLocation: AnyPublisher<Void, Error>
         let openSearchCondition: AnyPublisher<Void, Error>
         let openSearchResult: AnyPublisher<Void, Error>
+    }
+}
+
+extension SearchViewModel {
+    enum ModelError: Error {
+        case notFindShopByIndex
     }
 }

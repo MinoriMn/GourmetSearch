@@ -10,7 +10,6 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate, Floatin
     @IBOutlet weak var locationButton: UIButton!
     @IBOutlet weak var searchButton: UIButton!
     private var searchBar: SearchBar!
-//    private var conditionFloatingPanelController: FloatingPanelController!
     private var conditionViewController: ConditionViewController!
     private var searchResultFloatingPanelController: FloatingPanelController!
     private var searchResultViewController: SearchResultViewController!
@@ -26,6 +25,7 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate, Floatin
     private let receiveSearchCondition = PassthroughSubject<SearchCondition, Never>()
     private let sendShopsResult = PassthroughSubject<[Shop], Never>()
     private let showRoute = PassthroughSubject<Shop?, Never>()
+    private let selectedPin = PassthroughSubject<Int, Never>()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,17 +45,14 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate, Floatin
             )
         } as! ConditionViewController
         self.conditionViewController = conditionViewController
-//        conditionFloatingPanelController = FloatingPanelController()
-//        conditionFloatingPanelController.delegate = self
-//        conditionFloatingPanelController.set(contentViewController: self.conditionViewController )
-//        conditionFloatingPanelController.isRemovalInteractionEnabled = true
 
         let searchResultViewController = R.storyboard.searchResultViewController.instantiateInitialViewController { [weak self] coder in
             guard let self = self else { return nil }
             return SearchResultViewController(
                 coder: coder,
                 shopsPublisher: self.sendShopsResult.eraseToAnyPublisher(),
-                showRoute: self.showRoute
+                showRoute: self.showRoute,
+                scrollToShop: self.viewModel.scrollToShop.eraseToAnyPublisher()
             )
         } as! SearchResultViewController
         self.searchResultViewController = searchResultViewController
@@ -129,7 +126,8 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate, Floatin
                 search: search,
                 locationButtonTapped: locationButton.tapPublisher,
                 conditionButtonTapped: searchBar.getConditionButtonTapPublisher(),
-                searchResultButtonTapped: searchButton.tapPublisher
+                searchResultButtonTapped: searchButton.tapPublisher,
+                setectedPin: selectedPin.eraseToAnyPublisher()
             )
         )
 
@@ -212,7 +210,7 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate, Floatin
         guard let userCoordinate = mapView.userLocation.location?.coordinate else { return }
         let userPlaceMark = MKPlacemark(coordinate: userCoordinate)
         let placeMark = MKPlacemark(coordinate: coordinate)
-        directionsRequest.transportType = .automobile // TODO: 交通手段選択
+        directionsRequest.transportType = .walking // TODO: 交通手段選択
         directionsRequest.source = MKMapItem(placemark: userPlaceMark)
         directionsRequest.destination = MKMapItem(placemark: placeMark)
         let direction = MKDirections(request: directionsRequest)
@@ -297,5 +295,20 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate, Floatin
         routeRenderer.strokeColor = R.color.accentColor() ?? .orange
         routeRenderer.lineWidth = 3.0
         return routeRenderer
+    }
+
+    // タップされたピンの情報
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        if let annotation = view.annotation {
+
+            if let shopAnnotation = annotation as? ShopAnnotation,
+                let index = pins.firstIndex(of: shopAnnotation) {
+                selectedPin.send(index)
+            } else if let clusterAnnotation = annotation as? MKClusterAnnotation,
+                      let shopAnnotation = clusterAnnotation.memberAnnotations.first as? ShopAnnotation,
+                      let index = pins.firstIndex(of: shopAnnotation){
+                selectedPin.send(index)
+            }
+        }
     }
 }

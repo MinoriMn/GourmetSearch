@@ -20,8 +20,8 @@ class SearchResultViewController: UIViewController {
 
     private let index = CurrentValueSubject<Int, Never>(0)
 
-    init?(coder: NSCoder, shopsPublisher: AnyPublisher<[Shop], Never>, showRoute: PassthroughSubject<Shop?, Never>) {
-        self.viewModel = .init(shopsPublisher: shopsPublisher, showRoute: showRoute)
+    init?(coder: NSCoder, shopsPublisher: AnyPublisher<[Shop], Never>, showRoute: PassthroughSubject<Shop?, Never>, scrollToShop: AnyPublisher<Shop, Never>) {
+        self.viewModel = .init(shopsPublisher: shopsPublisher, showRoute: showRoute, scrollToShop: scrollToShop)
 
         super.init(coder: coder)
     }
@@ -98,6 +98,22 @@ class SearchResultViewController: UIViewController {
                 self.updateLayout()
             }
             .store(in: &cancellables)
+
+        output.scrollShop
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished: break
+                case .failure(let error):
+                    print(error) // TODO:
+                }
+            }, receiveValue: { [weak self] index in
+                DispatchQueue.main.async {
+                    self?.shopCollectionView.scrollToItem(at: IndexPath(item: index, section: 0), at: .centeredHorizontally, animated: true)
+                    self?.index.send(index)
+                }
+
+            })
+            .store(in: &cancellables)
     }
 }
 
@@ -114,7 +130,7 @@ extension SearchResultViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShopCollectionViewCell.identifier, for: indexPath) as! ShopCollectionViewCell
         let idx = indexPath.item
         let shop = viewModel.shops[idx]
-        if let url = URL(string: shop.photo?.mobile?.l ?? "") {
+        if let url = URL(string: shop.photo?.pc?.l ?? "") {
             Nuke.loadImage(with: url, into: cell.imageView)
         }
         cell.setTextInfo(title: shop.name, time: "mock 200m", opening: shop.open)

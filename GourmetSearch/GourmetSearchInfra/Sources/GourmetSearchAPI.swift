@@ -248,3 +248,4 @@ extension GourmetSearchRequest {
         let results: Results
     }
 }
+

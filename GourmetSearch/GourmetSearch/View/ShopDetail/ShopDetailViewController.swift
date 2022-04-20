@@ -38,7 +38,7 @@ class ShopDetailViewController: UIViewController {
         output.shop
             .sink { [weak self] shop in
                 self?.title = shop.name
-                if let imageView = self?.imageView, let url = URL(string: shop.photo?.mobile?.l ?? "") {
+                if let imageView = self?.imageView, let url = URL(string: shop.photo?.pc?.l ?? "") {
                     Nuke.loadImage(with: url, into: imageView)
                 }
                 self?.addressLabel.text = shop.address
