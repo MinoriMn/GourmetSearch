@@ -21,9 +21,11 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate, Floatin
     private var cancellables: [AnyCancellable] = []
 
     private var pins: [ShopAnnotation] = []
+    private var overlays: [MKOverlay] = []
 
     private let receiveSearchCondition = PassthroughSubject<SearchCondition, Never>()
     private let sendShopsResult = PassthroughSubject<[Shop], Never>()
+    private let showRoute = PassthroughSubject<Shop?, Never>()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,7 +54,8 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate, Floatin
             guard let self = self else { return nil }
             return SearchResultViewController(
                 coder: coder,
-                shopsPublisher: self.sendShopsResult.eraseToAnyPublisher()
+                shopsPublisher: self.sendShopsResult.eraseToAnyPublisher(),
+                showRoute: self.showRoute
             )
         } as! SearchResultViewController
         self.searchResultViewController = searchResultViewController
@@ -101,6 +104,17 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate, Floatin
     }
 
     private func bind(to viewModel: SearchViewModel) {
+        showRoute
+            .sink { [weak self] shop in
+                guard let self = self,
+                      let shop = shop,
+                      let lat = shop.lat,
+                      let lng = shop.lng else { return }
+                  let coord = CLLocationCoordinate2D(latitude: lat, longitude: lng)
+                self.setMapRoute(coordinate: coord)
+            }
+            .store(in: &cancellables)
+
         let search = receiveSearchCondition
             .map { [weak self] searchCondition -> (SearchCondition, CLLocationCoordinate2D?) in
                 guard let self = self, let location = self.mapView.userLocation.location else {
@@ -193,6 +207,30 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate, Floatin
             .store(in: &cancellables)
     }
 
+    private func setMapRoute(coordinate: CLLocationCoordinate2D) {
+        let directionsRequest = MKDirections.Request()
+        guard let userCoordinate = mapView.userLocation.location?.coordinate else { return }
+        let userPlaceMark = MKPlacemark(coordinate: userCoordinate)
+        let placeMark = MKPlacemark(coordinate: coordinate)
+        directionsRequest.transportType = .automobile // TODO: 交通手段選択
+        directionsRequest.source = MKMapItem(placemark: userPlaceMark)
+        directionsRequest.destination = MKMapItem(placemark: placeMark)
+        let direction = MKDirections(request: directionsRequest)
+        direction.calculate(completionHandler: { [weak self] (response, error) in
+            guard let self = self else { return }
+            for overlay in self.overlays {
+                self.mapView.removeOverlay(overlay)
+            }
+            self.overlays.removeAll()
+
+            if error == nil, let myRoute = response?.routes[0] {
+                self.mapView.addOverlay(myRoute.polyline, level: .aboveRoads) //mapViewに絵画
+                self.overlays.append(myRoute.polyline)
+            }
+
+        })
+    }
+
     private func closeToCurrentLocation(delta: Double) {
         if let coordinate = mapView.userLocation.location?.coordinate {
             closeToLocation(coordinate: coordinate, delta: delta)
@@ -251,4 +289,13 @@ class SearchViewController: UIViewController, CLLocationManagerDelegate, Floatin
 
         return markerAnnotationView
    }
+
+    //ピンを繋げている線の幅や色を調整
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        let route: MKPolyline = overlay as! MKPolyline
+        let routeRenderer = MKPolylineRenderer(polyline: route)
+        routeRenderer.strokeColor = R.color.accentColor() ?? .orange
+        routeRenderer.lineWidth = 3.0
+        return routeRenderer
+    }
 }

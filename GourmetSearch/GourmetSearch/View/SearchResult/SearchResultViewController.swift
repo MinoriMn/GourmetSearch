@@ -18,8 +18,10 @@ class SearchResultViewController: UIViewController {
     private let viewModel: SearchResultViewModel
     private var cancellables: [AnyCancellable] = []
 
-    init?(coder: NSCoder, shopsPublisher: AnyPublisher<[Shop], Never>) {
-        self.viewModel = .init(shopsPublisher: shopsPublisher)
+    private let index = CurrentValueSubject<Int, Never>(0)
+
+    init?(coder: NSCoder, shopsPublisher: AnyPublisher<[Shop], Never>, showRoute: PassthroughSubject<Shop?, Never>) {
+        self.viewModel = .init(shopsPublisher: shopsPublisher, showRoute: showRoute)
 
         super.init(coder: coder)
     }
@@ -34,6 +36,14 @@ class SearchResultViewController: UIViewController {
         bind(to: viewModel)
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        let x = self.shopCollectionView.contentOffset.x
+        let i = Int(x / (ShopCollectionViewCell.cellWidth + 75)) // TODO: 定数を調整
+        self.index.send(i)
+
+        super.viewWillAppear(animated)
+    }
+
     private func bind(to viewModel: SearchResultViewModel) {
         closeButton.tapPublisher
             .sink { [weak self] _ in
@@ -41,13 +51,51 @@ class SearchResultViewController: UIViewController {
             }
             .store(in: &cancellables)
 
-        let output = viewModel.transform(input: .init())
+        index
+            .sink { [weak self] index in
+                self?.pageLabel.text = "\(index + 1) / \(self?.viewModel.shops.count ?? 0)"
+            }
+            .store(in: &cancellables)
+
+        // 複数の購読を実行すると最後に購読したもの以外はキャンセルされてしまうらしい
+//        shopCollectionView.didSelectItemPublisher
+//            .sink { [weak self] index in
+//                guard let self = self else { return }
+//                //セルがタップされた時の処理
+//                let viewController = R.storyboard.shopDetailViewController().instantiateInitialViewController { [weak self] coder in
+//                    guard let self = self else { return nil }
+//                    return ShopDetailViewController(
+//                        coder: coder,
+//                        shop: self.viewModel.shops[index.item]
+//                    )
+//                }
+//                if let viewController = viewController {
+//                    self.present(viewController, animated: true)
+//                }
+//            }
+//            .store(in: &cancellables)
+//
+//        shopCollectionView.didScrollPublisher
+//            .sink { [weak self] _ in
+//                if let x = self?.shopCollectionView.contentOffset.x {
+//                    let i = Int(x / (ShopCollectionViewCell.cellWidth + 75)) // TODO: 定数を調整
+//                    if i != self?.index.value {
+//                        self?.index.send(i)
+//                    }
+//                }
+//            }
+//            .store(in: &cancellables)
+
+        let output = viewModel.transform(input: .init(
+            collectionScrolledPublisher: index.eraseToAnyPublisher()
+        ))
 
         output.updateShops
             .sink { [weak self] _ in
-                self?.pageLabel.text = "1 / \(self?.viewModel.shops.count ?? 0)"
-                self?.shopCollectionView.reloadData()
-                self?.updateLayout()
+                guard let self = self else { return }
+               
+                self.shopCollectionView.reloadData()
+                self.updateLayout()
             }
             .store(in: &cancellables)
     }
@@ -90,7 +138,7 @@ extension SearchResultViewController: UICollectionViewDataSource {
     }
 }
 
-extension SearchResultViewController: UICollectionViewDelegate {
+extension SearchResultViewController: UICollectionViewDelegate, UIScrollViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         //セルがタップされた時の処理
         let viewController = R.storyboard.shopDetailViewController().instantiateInitialViewController { [weak self] coder in
@@ -101,7 +149,23 @@ extension SearchResultViewController: UICollectionViewDelegate {
             )
         }
         if let viewController = viewController {
-            present(viewController, animated: true)
+            self.present(viewController, animated: true)
+        }
+    }
+
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView)  {
+        shouldUpdateIndex()
+    }
+
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        shouldUpdateIndex()
+    }
+
+    private func shouldUpdateIndex() {
+        let x = shopCollectionView.contentOffset.x
+        let i = Int(x / (ShopCollectionViewCell.cellWidth + 75)) // TODO: 定数を調整
+        if i != index.value {
+            index.send(i)
         }
     }
 }
